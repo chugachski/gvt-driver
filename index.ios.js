@@ -9,45 +9,46 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight,
+  Navigator
 } from 'react-native';
+
+const routes = [
+  { title: 'select', index: 0 },
+  { title: 'login', index: 1 },
+  { title: 'driverDetails', index: 2 },
+  { title: 'driverApp', index: 3 },
+  { title: 'passengerApp', index: 4 },
+]
 
 class gvtDriver extends Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+    return(
+      <Navigator
+        initialRoute={routes[0]}
+        initialRouteStack={routes}
+        renderScene={(route, navigator) =>
+          <TouchableHighlight
+            style={{backgroundColor: '#AAA'}}
+            onPress={() => {
+            if (route.index === 0) {
+              navigator.push(routes[1]);
+            } else {
+              navigator.pop();
+            }
+          }}>
+          <Text>Hello {route.title}!</Text>
+          </TouchableHighlight>
+        }
+        style={{padding: 100}}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+export default gvtDriver
 
 AppRegistry.registerComponent('gvtDriver', () => gvtDriver);
+
+
