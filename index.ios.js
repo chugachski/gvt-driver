@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -22,30 +16,86 @@ const routes = [
   { title: 'passengerApp', index: 4 },
 ]
 
-class gvtDriver extends Component {
+// class gvtDriver extends Component {
+//   render() {
+//     return(
+//       <Navigator
+//         initialRoute={routes[0]}
+//         initialRouteStack={routes}
+//         renderScene={(route, navigator) =>
+//           <TouchableHighlight
+//             style={{backgroundColor: '#AAA'}}
+//             onPress={() => {
+//             if (route.index === 0) {
+//               navigator.push(routes[1]);
+//             } else {
+//               navigator.pop();
+//             }
+//           }}>
+//           <Text>Hello {route.title}!</Text>
+//           </TouchableHighlight>
+//         }
+//         style={{padding: 100}}
+//       />
+//     );
+//   }
+// }
+
+
+class SimpleNavigationApp extends Component {
   render() {
-    return(
+    return (
       <Navigator
-        initialRoute={routes[0]}
-        initialRouteStack={routes}
+        initialRoute={{ title: 'My Initial Scene', index: 0 }}
         renderScene={(route, navigator) =>
-          <TouchableHighlight
-            style={{backgroundColor: '#AAA'}}
-            onPress={() => {
-            if (route.index === 0) {
-              navigator.push(routes[1]);
-            } else {
-              navigator.pop();
-            }
-          }}>
-          <Text>Hello {route.title}!</Text>
-          </TouchableHighlight>
+          return (
+            <MyScene
+              title={route.title}
+
+              // Function to call when a new scene should be displayed
+              onForward={ () => {
+                const nextIndex = route.index + 1;
+                navigator.push({
+                  title: 'Scene ' + nextIndex,
+                  index: nextIndex,
+                });
+              }}
+
+              // Function to call to go back to the previous scene
+              onBack={() => {
+                if (route.index > 0) {
+                  navigator.pop();
+                }
+              }}
+            />
+          )
         }
-        style={{padding: 100}}
       />
-    );
+    )
   }
 }
+
+class MyScene extends Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    onForward: PropTypes.func.isRequired,
+    onBack: PropTypes.func.isRequired,
+  }
+  render() {
+    return (
+      <View>
+        <Text>Current Scene: { this.props.title }</Text>
+        <TouchableHighlight onPress={this.props.onForward}>
+          <Text>Tap me to load the next scene</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this.props.onBack}>
+          <Text>Tap me to go back</Text>
+        </TouchableHighlight>
+      </View>
+    )
+  }
+}
+
 
 export default gvtDriver
 
