@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {
   Text,
+  Dimensions,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  MapView
 } from 'react-native';
 
 import axios from 'axios';
@@ -12,7 +14,19 @@ class DriverMap extends Component {
     super(props);
     this.state = {
       shuttleId: '',
-      driverId: ''
+      driverId: '',
+
+      mapRegion: {
+      latitude: 60.965727,
+      longitude: -149.136103,
+      latitudeDelta: 0.15,
+      longitudeDelta: 0.15,
+    },
+    annotations: [{
+      latitude: 60.965727,
+      longitude: -149.136103,
+    }],
+
     };
   }
 
@@ -71,7 +85,12 @@ class DriverMap extends Component {
     console.log('t.p.:', this.props);
     return(
       <View style={{paddingTop: 20}}>
-        <Text>Show map here</Text>
+
+        <MapView
+          style={{width: 200, height: 410}}
+          region={this.state.mapRegion}
+          annotations={this.state.annotations} />
+        
         <Text>Here is driver {this.props.driver.first_name}</Text>
         <Text>Here is shuttle {this.props.shuttle.shuttle_num}</Text>
 
