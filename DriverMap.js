@@ -31,6 +31,10 @@ class DriverMap extends Component {
     });
   }
 
+  goBack(){
+    this.props.navigator.pop()
+  }
+
   logout(){
     // const ape = this
     console.log(this.props.shuttle.id);
@@ -74,6 +78,11 @@ class DriverMap extends Component {
         <TouchableHighlight
           onPress={() => this.logout()}>
           <Text> LOGOUT </Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+          onPress={() => this.goBack()}>
+          <Text>Go Back</Text>
         </TouchableHighlight>
       </View>
     )

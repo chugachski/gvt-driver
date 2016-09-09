@@ -94,7 +94,7 @@ class Info extends Component {
 
         <TouchableHighlight
           onPress={() => this.goBack()}>
-          <Text>IT WORKED</Text>
+          <Text>Go Back</Text>
         </TouchableHighlight>
 
         <Text>Drivers</Text>
@@ -112,7 +112,7 @@ class Info extends Component {
           )}
           />
 
-          <Text>Drivers</Text>
+          <Text>Shuttles</Text>
           <ListView
             dataSource={this.ds.cloneWithRows(this.state.shuttles)}
             renderRow={ shuttle => (
