@@ -26,8 +26,8 @@ class Info extends Component {
   goToMap(){
     this.props.navigator.push({
       component: DriverMap,
-      driverId: this.state.selectedDriver,
-      shuttleId: this.state.selectedShuttle
+      driver: this.state.selectedDriver,
+      shuttle: this.state.selectedShuttle
     })
   }
 
@@ -76,12 +76,12 @@ class Info extends Component {
   selectShuttle(shuttle){
     console.log(`${shuttle.shuttle_num} selected`);
     this.setState({
-      selectShuttle: shuttle
+      selectedShuttle: shuttle
     })
   }
 
   getState() {
-    console.log('selectedDriver:', this.state.selectedDriver);
+    console.log('selectedShuttle:', this.state.selectedShuttle);
   }
 
   render(){

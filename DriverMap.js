@@ -43,8 +43,8 @@ class DriverMap extends Component {
         data: {
           lat: 60.970598,
           lng: -149.096939,
-          driver_id: this.props.driverId.id,
-          shuttle_id: this.props.shuttleId.id
+          driver_id: this.props.driver.id,
+          shuttle_id: this.props.shuttle.id
         }
       }).then(function(response){
         console.log(response);
@@ -54,12 +54,13 @@ class DriverMap extends Component {
   }
 
   render(){
-    console.log(this.state);
+    // console.log(this.state);
+    console.log('t.p.:', this.props);
     return(
       <View style={{paddingTop: 20}}>
         <Text>Show map here</Text>
-        <Text>Here is driver {this.props.driverId.first_name}</Text>
-        <Text>Here is shuttle {this.props.shuttleId.shuttle_num}</Text>
+        <Text>Here is driver {this.props.driver.first_name}</Text>
+        <Text>Here is shuttle {this.props.shuttle.shuttle_num}</Text>
       </View>
     )
   }
