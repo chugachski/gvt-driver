@@ -20,7 +20,7 @@ class DriverMap extends Component {
     navigator.geolocation.watchPosition(function(position) {
       axios({
         method: 'PUT',
-        url: 'http://localhost:3000/trackings/${this.state.shuttleId}',
+        url: `http://localhost:3000/trackings/${this.state.shuttleId}`,
         data: {
           new_lat: position.coords.latitude,
           new_lng: position.coords.longitude,
@@ -28,6 +28,15 @@ class DriverMap extends Component {
           new_shuttle_id: this.props.shuttle.id
         }
       })
+    });
+  }
+
+  logout(){
+    // const ape = this
+    console.log(this.props.shuttle.id);
+    axios({
+      method: 'DELETE',
+      url: 'http://localhost:3000/trackings/' + this.props.shuttle.id,
     });
   }
 
@@ -61,6 +70,11 @@ class DriverMap extends Component {
         <Text>Show map here</Text>
         <Text>Here is driver {this.props.driver.first_name}</Text>
         <Text>Here is shuttle {this.props.shuttle.shuttle_num}</Text>
+
+        <TouchableHighlight
+          onPress={() => this.logout()}>
+          <Text> LOGOUT </Text>
+        </TouchableHighlight>
       </View>
     )
   }
