@@ -12,6 +12,7 @@ class DriverMap extends Component {
     super(props);
     this.state = {
       shuttleId: '',
+      driverId: ''
     };
   }
 
@@ -38,26 +39,27 @@ class DriverMap extends Component {
     const app = this
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/trackings/new'
+        url: 'http://localhost:3000/trackings/new',
         data: {
           lat: 60.970598,
           lng: -149.096939,
-          driver_id: this.props.driver.id,
-          shuttle_id: this.props.shuttle.id
+          driver_id: this.props.driverId.id,
+          shuttle_id: this.props.shuttleId.id
         }
       }).then(function(response){
         console.log(response);
-        app.setState({shuttleId: response.data[0].id})
-        app.setLoc()
+        // app.setState({shuttleId: response.data[0].id})
+        // app.setLoc()
       })
   }
 
   render(){
+    console.log(this.state);
     return(
-      <View>
+      <View style={{paddingTop: 20}}>
         <Text>Show map here</Text>
-        <Text>Here is driver {this.props.driver.first_name}</Text>
-        <Text>Here is shuttle {this.props.shuttle.shuttle_num}</Text>
+        <Text>Here is driver {this.props.driverId.first_name}</Text>
+        <Text>Here is shuttle {this.props.shuttleId.shuttle_num}</Text>
       </View>
     )
   }

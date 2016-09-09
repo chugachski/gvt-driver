@@ -9,7 +9,7 @@ import {
 
 import axios from 'axios';
 
-// import DriverMap from './DriverMap';
+import DriverMap from './DriverMap';
 
 class Info extends Component {
   constructor(props){
@@ -23,13 +23,13 @@ class Info extends Component {
     }
   }
 
-  // goToMap(){
-  //   this.props.navigator.push(){
-  //     component: DriverMap,
-  //     driver: this.state.selectedDriver,
-  //     shuttle: this.state.selectedShuttle
-  //   }
-  // }
+  goToMap(){
+    this.props.navigator.push({
+      component: DriverMap,
+      driverId: this.state.selectedDriver,
+      shuttleId: this.state.selectedShuttle
+    })
+  }
 
   goBack(){
     this.props.navigator.pop()
@@ -73,6 +73,13 @@ class Info extends Component {
     })
   }
 
+  selectShuttle(shuttle){
+    console.log(`${shuttle.shuttle_num} selected`);
+    this.setState({
+      selectShuttle: shuttle
+    })
+  }
+
   getState() {
     console.log('selectedDriver:', this.state.selectedDriver);
   }
@@ -90,6 +97,7 @@ class Info extends Component {
           <Text>IT WORKED</Text>
         </TouchableHighlight>
 
+        <Text>Drivers</Text>
         <ListView
           dataSource={this.ds.cloneWithRows(this.state.drivers)}
           renderRow={ driver => (
@@ -104,9 +112,30 @@ class Info extends Component {
           )}
           />
 
+          <Text>Drivers</Text>
+          <ListView
+            dataSource={this.ds.cloneWithRows(this.state.shuttles)}
+            renderRow={ shuttle => (
+              <TouchableHighlight
+                underlayColor={'#EEE'}
+                onPress={ () => this.selectShuttle(shuttle)}>
+
+                <View>
+                  <Text numberOfLines={1}>{`${shuttle.shuttle_num}`}</Text>
+                </View>
+              </TouchableHighlight>
+            )}
+            />
+
+
           <TouchableHighlight
             onPress={() => this.getState()}>
             <Text> Get state </Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            onPress={() => this.goToMap()}>
+            <Text> Submit </Text>
           </TouchableHighlight>
       </View>
     )
