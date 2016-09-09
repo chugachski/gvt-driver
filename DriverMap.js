@@ -16,6 +16,10 @@ class DriverMap extends Component {
     };
   }
 
+  goBack(){
+    this.props.navigator.pop()
+  }
+
   setLoc(){
     navigator.geolocation.watchPosition(function(position) {
       axios({
@@ -75,6 +79,16 @@ class DriverMap extends Component {
           onPress={() => this.logout()}>
           <Text> LOGOUT </Text>
         </TouchableHighlight>
+
+
+        <TouchableHighlight
+          onPress={ () => this.goBack() }
+        >
+          <View>
+            <Text>Go back</Text>
+          </View>
+        </TouchableHighlight>
+
       </View>
     )
   }

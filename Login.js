@@ -48,6 +48,7 @@ class Select extends Component {
         >
           <Text>Submit</Text>
         </TouchableHighlight>
+
         <TouchableHighlight
           onPress={ () => this.goBack() }
         >
