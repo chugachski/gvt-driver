@@ -44,11 +44,11 @@ class Info extends Component {
     })
     .then(function(response) {
       console.log(response);
-      app.setState({
-        driver: response.data
+        app.setState({
+          drivers: response.data
+        })
+        // console.log('D:', app.state.drivers);
       })
-      console.log('FN:', app.state.drivers[0].first_name);
-    })
 
     axios({
       method: 'GET',
@@ -58,23 +58,32 @@ class Info extends Component {
     .then(function(response) {
       console.log(response);
       app.setState({
-        shuttle: response.data
+        shuttles: response.data
       })
-      console.log('SN:', app.state.shuttles[0].shuttle_num);
+      // console.log('S:', app.state.shuttles);
     })
+
   }
 
   selectDriver(name) {
     // code to change selected driver
+    console.log(`${name.first_name} ${name.last_name} selected`);
+    this.setState({
+      selectedDriver: name
+    })
+    console.log('SD:', this.state.selectedDriver)
   }
 
   render(){
+
+
     return(
       <View style={{paddingTop: 20}}>
         <Text
           style={{fontSize: 20, fontWeight: 'bold'}}>
           Info page
         </Text>
+
         <TouchableHighlight
           onPress={() => this.goBack()}>
           <Text>IT WORKED</Text>
@@ -85,15 +94,14 @@ class Info extends Component {
           renderRow={ driver => (
             <TouchableHighlight
               underlayColor={'#EEE'}
-
+              onPress={ () => this.selectDriver(driver) }
             >
               <View>
-                <Text numberOfLines={1}>{drivers.first_name}</Text>
+                <Text numberOfLines={1}>{`${driver.first_name} ${driver.last_name}`}</Text>
               </View>
             </TouchableHighlight>
           )}
         />
-
       </View>
     )
   }
