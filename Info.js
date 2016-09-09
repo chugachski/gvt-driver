@@ -113,6 +113,7 @@ class Info extends Component {
           />
 
           <Text>Shuttles</Text>
+
           <ListView
             dataSource={this.ds.cloneWithRows(this.state.shuttles)}
             renderRow={ shuttle => (
