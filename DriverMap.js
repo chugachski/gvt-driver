@@ -17,21 +17,19 @@ class DriverMap extends Component {
       driverId: '',
 
       mapRegion: {
-      latitude: 60.965727,
-      longitude: -149.136103,
-      latitudeDelta: 0.15,
-      longitudeDelta: 0.15,
-    },
-    annotations: [{
-      latitude: 60.965727,
-      longitude: -149.136103,
-    }],
+        latitude: 60.965727,
+        longitude: -149.136103,
+        // latitude: 37.774929,
+        // longitude: -122.419416,
+        latitudeDelta: 0.15,
+        longitudeDelta: 0.15,
+      },
+      annotations: [{
+        latitude: 60.965727,
+        longitude: -149.136103,
+      }],
 
     };
-  }
-
-  goBack(){
-    this.props.navigator.pop()
   }
 
   setLoc(){
@@ -54,7 +52,6 @@ class DriverMap extends Component {
   }
 
   logout(){
-    // const ape = this
     console.log(this.props.shuttle.id);
     axios({
       method: 'DELETE',
@@ -67,6 +64,27 @@ class DriverMap extends Component {
     // lat/lng. The idea is that if the app should crash or close, it should grab current
     // location instead of starting it at Tramway before the next update.
     // Leaving it hardcoded until testing on watchPosition is done.
+
+    // const options = {
+    //   enableHighAccuracy: true,
+    //   timeout: 15000,
+    //   maximumAge: 1000
+    // }
+    //
+    // navigator.geolocation.getCurrentPosition(
+    //   position => {
+    //     console.log('shuttlePos:', position);
+    //     // set state
+    //     this.setState({
+    //       annotations: [{
+    //         latitude: position.coords.latitude,
+    //         longitude: position.coords.longitude,
+    //       }]
+    //     })
+    //   },
+    //   (error) => alert(error.message), options
+    // );
+
     const app = this
       axios({
         method: 'POST',
@@ -84,19 +102,30 @@ class DriverMap extends Component {
       })
   }
 
+  // let cap = str.charAt(0).toUpperCase() + str.substr(1);
   render(){
     // console.log(this.state);
     console.log('t.p.:', this.props);
+
+    function formatNames(first, last) {
+      return(
+        first.charAt(0).toUpperCase() +
+        first.substr(1) + ' ' +
+        last.charAt(0).toUpperCase() +
+        last.substr(1)
+      )
+    }
+
     return(
-      <View style={{paddingTop: 20}}>
+      <View style={{paddingTop: 20, flex: 1, alignItems: 'center'}}>
 
         <MapView
-          style={{width: 200, height: 410}}
+          style={{width: Dimensions.get('window').width - 20, height: Dimensions.get('window').height - 125}}
           region={this.state.mapRegion}
           annotations={this.state.annotations} />
 
-        <Text>Here is driver {this.props.driver.first_name}</Text>
-        <Text>Here is shuttle {this.props.shuttle.shuttle_num}</Text>
+        <Text>Driver: {formatNames(this.props.driver.first_name, this.props.driver.last_name)}</Text>
+        <Text>Shuttle: {this.props.shuttle.shuttle_num}</Text>
 
         <TouchableHighlight
           onPress={() => this.logout()}>
@@ -107,16 +136,6 @@ class DriverMap extends Component {
           onPress={() => this.goBack()}>
           <Text>Go Back</Text>
         </TouchableHighlight>
-
-
-        <TouchableHighlight
-          onPress={ () => this.goBack() }
-        >
-          <View>
-            <Text>Go back</Text>
-          </View>
-        </TouchableHighlight>
-
 
       </View>
     )

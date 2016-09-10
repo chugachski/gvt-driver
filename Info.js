@@ -4,7 +4,8 @@ import {
   Text,
   TouchableHighlight,
   View,
-  ListView
+  ListView,
+  StyleSheet
 } from 'react-native';
 
 import axios from 'axios';
@@ -85,6 +86,14 @@ class Info extends Component {
   }
 
   render(){
+    function formatNames(first, last) {
+      return(
+        first.charAt(0).toUpperCase() +
+        first.substr(1) + ' ' +
+        last.charAt(0).toUpperCase() +
+        last.substr(1)
+      )
+    }
     return(
       <View style={{paddingTop: 20}}>
         <Text
@@ -92,13 +101,9 @@ class Info extends Component {
           Info page
         </Text>
 
-        <TouchableHighlight
-          onPress={() => this.goBack()}>
-          <Text>Go Back</Text>
-        </TouchableHighlight>
-
-        <Text>Drivers</Text>
+        <Text style={styles.heading}>Drivers</Text>
         <ListView
+          style={styles.list}
           dataSource={this.ds.cloneWithRows(this.state.drivers)}
           renderRow={ driver => (
             <TouchableHighlight
@@ -106,15 +111,18 @@ class Info extends Component {
               onPress={ () => this.selectDriver(driver)}>
 
               <View>
-                <Text numberOfLines={1}>{`${driver.first_name} ${driver.last_name}`}</Text>
+                <Text numberOfLines={1}>
+                  {formatNames(driver.first_name, driver.last_name)}
+                </Text>
               </View>
             </TouchableHighlight>
           )}
           />
 
-          <Text>Shuttles</Text>
+          <Text style={styles.heading}>Shuttles</Text>
 
           <ListView
+            style={styles.list}
             dataSource={this.ds.cloneWithRows(this.state.shuttles)}
             renderRow={ shuttle => (
               <TouchableHighlight
@@ -128,19 +136,32 @@ class Info extends Component {
             )}
             />
 
-
-          <TouchableHighlight
-            onPress={() => this.getState()}>
-            <Text> Get state </Text>
-          </TouchableHighlight>
-
           <TouchableHighlight
             onPress={() => this.goToMap()}>
             <Text> Submit </Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            onPress={() => this.goBack()}>
+            <Text>Go Back</Text>
           </TouchableHighlight>
       </View>
     )
   }
 }
 
+const styles = StyleSheet.create({
+  list: {
+    marginBottom: 15
+  },
+  heading: {
+    fontWeight: 'bold'
+  },
+})
+
 export default Info;
+
+// <TouchableHighlight
+//   onPress={() => this.getState()}>
+//   <Text> Get state </Text>
+// </TouchableHighlight>
