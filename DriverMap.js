@@ -4,7 +4,8 @@ import {
   Dimensions,
   View,
   TouchableHighlight,
-  MapView
+  MapView,
+  StyleSheet
 } from 'react-native';
 
 import axios from 'axios';
@@ -19,8 +20,6 @@ class DriverMap extends Component {
       mapRegion: {
         latitude: 60.965727,
         longitude: -149.136103,
-        // latitude: 37.774929,
-        // longitude: -122.419416,
         latitudeDelta: 0.15,
         longitudeDelta: 0.15,
       },
@@ -28,8 +27,11 @@ class DriverMap extends Component {
         latitude: 60.965727,
         longitude: -149.136103,
       }],
-
     };
+  }
+
+  goBack(){
+    this.props.navigator.pop()
   }
 
   setLoc(){
@@ -52,6 +54,7 @@ class DriverMap extends Component {
   }
 
   logout(){
+    // const ape = this
     console.log(this.props.shuttle.id);
     axios({
       method: 'DELETE',
@@ -85,6 +88,7 @@ class DriverMap extends Component {
     //   (error) => alert(error.message), options
     // );
 
+
     const app = this
       axios({
         method: 'POST',
@@ -102,10 +106,8 @@ class DriverMap extends Component {
       })
   }
 
-  // let cap = str.charAt(0).toUpperCase() + str.substr(1);
   render(){
-    // console.log(this.state);
-    console.log('t.p.:', this.props);
+    // console.log('t.p.:', this.props);
 
     function formatNames(first, last) {
       return(
@@ -117,10 +119,10 @@ class DriverMap extends Component {
     }
 
     return(
-      <View style={{paddingTop: 20, flex: 1, alignItems: 'center'}}>
+      <View style={styles.container}>
 
         <MapView
-          style={{width: Dimensions.get('window').width - 20, height: Dimensions.get('window').height - 125}}
+          style={styles.map}
           region={this.state.mapRegion}
           annotations={this.state.annotations} />
 
@@ -142,5 +144,16 @@ class DriverMap extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 20,
+    flex: 1,
+    alignItems: 'center'
+  },
+  map: {
+    width: Dimensions.get('window').width - 20,
+    height: Dimensions.get('window').height - 125
+  },
+})
 
 export default DriverMap;
