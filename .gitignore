@@ -27,6 +27,7 @@ project.xcworkspace
 *.iml
 .idea
 local.properties
+!gradle-wrapper.jar
 
 # node.js
 #
